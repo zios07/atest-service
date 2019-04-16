@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("api/users")
 public class UserController {
 
 	@Autowired
@@ -20,6 +20,13 @@ public class UserController {
 	@GetMapping(value = "{id}")
 	public ResponseEntity<User> findUser(@PathVariable long id) throws NotFoundException {
 		User user = service.findUser(id);
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+
+
+	@GetMapping(value = "/find/connected")
+	public ResponseEntity<User> findUser() throws NotFoundException {
+		User user = service.getConnectedUser();
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
@@ -52,5 +59,6 @@ public class UserController {
 		List<User> users = service.searchUsers(userDto);
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
+
 
 }

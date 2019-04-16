@@ -20,5 +20,7 @@ public interface IUserService {
 	User updateUser(User user) throws NotFoundException;
 	
 	User findUserByUsername(String username) throws NotFoundException;
-	
+
+	User getConnectedUser() throws NotFoundException;
+
 }

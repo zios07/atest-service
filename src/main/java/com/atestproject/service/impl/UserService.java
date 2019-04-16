@@ -7,6 +7,7 @@ import com.atestproject.repository.UserRepository;
 import com.atestproject.service.IRoleService;
 import com.atestproject.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -89,4 +90,10 @@ public class UserService implements IUserService {
         return user;
     }
 
+    @Override
+    public User getConnectedUser() throws NotFoundException {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return this.findUserByUsername(username);
+
+    }
 }

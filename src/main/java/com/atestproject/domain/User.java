@@ -13,8 +13,6 @@ public class User {
     @GeneratedValue
     private Long id;
 
-    private String email;
-
     private String firstName;
 
     private String lastName;
@@ -33,10 +31,9 @@ public class User {
         super();
     }
 
-    public User(Long id, String email, String firstName, String lastName, LocalDate bDate, Account account, Role role) {
+    public User(Long id, String firstName, String lastName, LocalDate bDate, Account account, Role role) {
         super();
         this.id = id;
-        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.bDate = bDate;
@@ -50,14 +47,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFirstName() {

@@ -7,17 +7,19 @@ import javax.persistence.Id;
 @Entity
 public class Role {
 
-	@Id @GeneratedValue
+
+	@Id
+	@GeneratedValue
 	private Long id;
-	
+
 	private String roleCode;
-	
+
 	private String roleLabel;
 
 	public Role() {
-		
+
 	}
-	
+
 	public Role(String roleCode, String roleLabel) {
 		super();
 		this.roleCode = roleCode;
@@ -47,5 +49,4 @@ public class Role {
 	public void setRoleLabel(String roleLabel) {
 		this.roleLabel = roleLabel;
 	}
-	
 }

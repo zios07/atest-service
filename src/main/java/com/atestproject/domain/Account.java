@@ -10,19 +10,25 @@ public class Account {
 
 	@Id @GeneratedValue
 	private Long id;
-	
+
 	@Column(unique = true)
 	private String username;
-	
+
 	private String password;
-	
+
 	public Account() {
-		
+
 	}
-	
+
 	public Account(Long id, String username, String password) {
 		super();
 		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
+
+	public Account(String username, String password) {
+		super();
 		this.username = username;
 		this.password = password;
 	}
