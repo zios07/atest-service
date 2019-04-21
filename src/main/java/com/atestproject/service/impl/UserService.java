@@ -2,10 +2,13 @@ package com.atestproject.service.impl;
 
 import com.atestproject.domain.Role;
 import com.atestproject.domain.User;
+import com.atestproject.dto.ProfileDTO;
 import com.atestproject.exception.NotFoundException;
+import com.atestproject.exception.ServiceException;
 import com.atestproject.repository.UserRepository;
 import com.atestproject.service.IRoleService;
 import com.atestproject.service.IUserService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,7 +31,11 @@ public class UserService implements IUserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public User addUser(User user) {
+    public User addUser(User user)  throws ServiceException {
+        if (user.getAccount() != null && user.getAccount().getUsername() != null)
+            if (repo.findByAccountUsername(user.getAccount().getUsername()) != null) {
+                throw new ServiceException("USERNAME.ALREADY.EXISTS", "Username already exists");
+            }
         if (repo.count() == 0) {
             user.setRole(roleService.getRoleAdmin());
         } else {
@@ -95,5 +102,16 @@ public class UserService implements IUserService {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return this.findUserByUsername(username);
 
+    }
+
+    @Override
+    public User updateUserProfile(ProfileDTO profileDTO) {
+        User user = repo.findById(profileDTO.getUserID()).get();
+        user.setFirstName(profileDTO.getFirstName());
+        user.setLastName(profileDTO.getLastName());
+        if(!Strings.isEmpty(profileDTO.getNewPassword())) {
+            user.getAccount().setPassword(passwordEncoder.encode(profileDTO.getNewPassword()));
+        }
+        return repo.save(user);
     }
 }

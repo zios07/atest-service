@@ -1,13 +1,15 @@
 package com.atestproject.service;
 
 import com.atestproject.domain.User;
+import com.atestproject.dto.ProfileDTO;
 import com.atestproject.exception.NotFoundException;
+import com.atestproject.exception.ServiceException;
 
 import java.util.List;
 
 public interface IUserService {
 	
-	User addUser(User user);
+	User addUser(User user) throws ServiceException;
 
 	User findUser(long id) throws NotFoundException;
 
@@ -23,4 +25,5 @@ public interface IUserService {
 
 	User getConnectedUser() throws NotFoundException;
 
+    User updateUserProfile(ProfileDTO user);
 }
