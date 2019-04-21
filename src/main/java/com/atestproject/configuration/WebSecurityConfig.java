@@ -80,7 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public AccountService accountService() {
 		return new AccountService();
 	}
-	
+
 	@Bean
 	public IUserService userService() {
 		return new UserService();

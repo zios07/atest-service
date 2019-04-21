@@ -1,7 +1,9 @@
 package com.atestproject.rest;
 
 import com.atestproject.domain.User;
+import com.atestproject.dto.ProfileDTO;
 import com.atestproject.exception.NotFoundException;
+import com.atestproject.exception.ServiceException;
 import com.atestproject.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,16 +39,22 @@ public class UserController {
 	}
 
 	@PostMapping("register")
-	public ResponseEntity<User> addUser(@RequestBody User user) {
+	public ResponseEntity<User> addUser(@RequestBody User user) throws ServiceException {
 		User savedUser = service.addUser(user);
 		return new ResponseEntity<User>(savedUser, HttpStatus.CREATED);
 	}
 
-	@PutMapping
-	public ResponseEntity<User> updateUser(@RequestBody User user) throws NotFoundException {
-		User updatedUser = service.updateUser(user);
-		return new ResponseEntity<User>(updatedUser, HttpStatus.CREATED);
-	}
+    @PutMapping
+    public ResponseEntity<User> updateUser(@RequestBody User user) throws NotFoundException {
+        User updatedUser = service.updateUser(user);
+        return new ResponseEntity<User>(updatedUser, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "profile")
+    public ResponseEntity<User> updateUserProfile(@RequestBody ProfileDTO profile) throws NotFoundException {
+        User updatedUser = service.updateUserProfile(profile);
+        return new ResponseEntity<User>(updatedUser, HttpStatus.CREATED);
+    }
 
 	@DeleteMapping(value = "{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable long id) throws NotFoundException {

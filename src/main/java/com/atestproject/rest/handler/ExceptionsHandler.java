@@ -2,6 +2,7 @@ package com.atestproject.rest.handler;
 
 import com.atestproject.exception.BadCredentialsException;
 import com.atestproject.exception.NotFoundException;
+import com.atestproject.exception.ServiceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +23,13 @@ public class ExceptionsHandler {
     @ExceptionHandler(value = NotFoundException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public ResponseError handleNotFound(NotFoundException ex) {
+        return new ResponseError(ex.getCode(), ex.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = ServiceException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ResponseError handleServiceException(ServiceException ex) {
         return new ResponseError(ex.getCode(), ex.getMessage());
     }
 
