@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ProfileDTO implements Serializable {
 
     private Long userID;
-    private String newPassword;
+    private String password;
     private String lastName;
     private String firstName;
 
@@ -20,12 +20,12 @@ public class ProfileDTO implements Serializable {
         this.userID = userID;
     }
 
-    public String getNewPassword() {
-        return newPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getLastName() {

@@ -15,7 +15,7 @@ public interface IAccountService {
 
 	void deleteAccount(long id) throws NotFoundException;
 
-	List<Account> searchAccounts(Account accountdtDto) throws NotFoundException;
+	List<Account> searchAccounts(Account account) throws NotFoundException;
 	
 	Account findAccountByUsername(String username) throws NotFoundException;
 }

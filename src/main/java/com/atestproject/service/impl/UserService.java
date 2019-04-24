@@ -109,8 +109,8 @@ public class UserService implements IUserService {
         User user = repo.findById(profileDTO.getUserID()).get();
         user.setFirstName(profileDTO.getFirstName());
         user.setLastName(profileDTO.getLastName());
-        if(!Strings.isEmpty(profileDTO.getNewPassword())) {
-            user.getAccount().setPassword(passwordEncoder.encode(profileDTO.getNewPassword()));
+        if(!Strings.isEmpty(profileDTO.getPassword())) {
+            user.getAccount().setPassword(passwordEncoder.encode(profileDTO.getPassword()));
         }
         return repo.save(user);
     }
