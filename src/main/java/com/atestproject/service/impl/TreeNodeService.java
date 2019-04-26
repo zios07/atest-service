@@ -6,8 +6,10 @@ import com.atestproject.exception.NotFoundException;
 import com.atestproject.repository.TreeNodeRepository;
 import com.atestproject.service.ITreeNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -19,7 +21,9 @@ public class TreeNodeService implements ITreeNodeService {
 
     @Override
     public TreeNode addTreeNode(TreeNode treeNode) {
-        return null;
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        treeNode.setUsername(username);
+        return treeNodeRepository.save(treeNode);
     }
 
     @Override
@@ -50,5 +54,19 @@ public class TreeNodeService implements ITreeNodeService {
     @Override
     public List<TreeNode> getConnectedUserTreeNodes() {
         return null;
+    }
+
+    @Override
+    public List<TreeNode> addMultipleNodes(TreeNode[] nodes) {
+        for (TreeNode node : nodes) {
+            this.addTreeNode(node);
+        }
+        return Arrays.asList(nodes);
+    }
+
+    @Override
+    public List<TreeNode> getUserTree() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return this.treeNodeRepository.findByUsername(username);
     }
 }

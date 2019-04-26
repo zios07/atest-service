@@ -20,4 +20,8 @@ public interface ITreeNodeService {
 	TreeNode findTreeNodeByUsername(String username) throws NotFoundException;
 
     List<TreeNode> getConnectedUserTreeNodes();
+
+    List<TreeNode> addMultipleNodes(TreeNode[] nodes);
+
+	List<TreeNode> getUserTree();
 }

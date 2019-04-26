@@ -2,7 +2,9 @@ package com.atestproject.rest;
 
 
 import com.atestproject.domain.TestCase;
+import com.atestproject.domain.TreeNode;
 import com.atestproject.service.ITestCaseService;
+import com.atestproject.service.ITreeNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +17,8 @@ public class TestCaseController {
     @Autowired
     private ITestCaseService testCaseService;
 
-//    @GetMapping
-//    public List<TestCase> findAll() {
-//        return testCaseService.findAllTestCases();
-//    }
+    @Autowired
+    private ITreeNodeService treeNodeService;
 
     @GetMapping
     public List<TestCase> getConnectedUserTestCases() {
@@ -28,6 +28,21 @@ public class TestCaseController {
     @PostMapping
     public TestCase createTestCase(@RequestBody TestCase testCase) {
         return testCaseService.addTestCase(testCase);
+    }
+
+    @PostMapping(value = "node")
+    public TreeNode createNode(@RequestBody TreeNode node) {
+        return treeNodeService.addTreeNode(node);
+    }
+
+    @PostMapping(value = "node/multiple")
+    public List<TreeNode> createMultipleNodes(@RequestBody TreeNode[] nodes) {
+        return treeNodeService.addMultipleNodes(nodes);
+    }
+
+    @GetMapping(value = "tree")
+    public List<TreeNode> getUserTree() {
+        return treeNodeService.getUserTree();
     }
 
 }
