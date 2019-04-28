@@ -3,9 +3,11 @@ package com.atestproject.rest;
 
 import com.atestproject.domain.TestCase;
 import com.atestproject.domain.TreeNode;
+import com.atestproject.exception.NotFoundException;
 import com.atestproject.service.ITestCaseService;
 import com.atestproject.service.ITreeNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,6 +45,11 @@ public class TestCaseController {
     @GetMapping(value = "tree")
     public List<TreeNode> getUserTree() {
         return treeNodeService.getUserTree();
+    }
+
+    @DeleteMapping(value = "tree/node/{id}")
+    public void deleteTreeNode(@PathVariable Long id) throws NotFoundException {
+        treeNodeService.deleteTreeNode(id);
     }
 
 }

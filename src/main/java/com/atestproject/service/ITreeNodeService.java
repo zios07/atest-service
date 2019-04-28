@@ -13,7 +13,7 @@ public interface ITreeNodeService {
 
 	List<TreeNode> findAllTreeNodes();
 
-	void deleteTreeNode(long id) throws NotFoundException;
+	void deleteTreeNode(Long id) throws NotFoundException;
 
 	List<TreeNode> searchTreeNodes(TreeNode treeNode) throws NotFoundException;
 	
