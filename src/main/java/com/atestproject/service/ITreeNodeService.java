@@ -24,4 +24,6 @@ public interface ITreeNodeService {
     List<TreeNode> addMultipleNodes(TreeNode[] nodes);
 
 	List<TreeNode> getUserTree();
+
+	TreeNode updateNode(TreeNode node);
 }

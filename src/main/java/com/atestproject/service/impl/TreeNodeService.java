@@ -1,6 +1,5 @@
 package com.atestproject.service.impl;
 
-import com.atestproject.domain.TestCase;
 import com.atestproject.domain.TreeNode;
 import com.atestproject.exception.NotFoundException;
 import com.atestproject.repository.TreeNodeRepository;
@@ -9,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class TreeNodeService implements ITreeNodeService {
@@ -42,8 +41,13 @@ public class TreeNodeService implements ITreeNodeService {
     }
 
     @Override
+    @Transactional
     public void deleteTreeNode(Long id) throws NotFoundException {
-        if (treeNodeRepository.existsById(id)) {
+        Optional<TreeNode> optNode = treeNodeRepository.findById(id);
+        if (optNode.isPresent()) {
+            TreeNode node = optNode.get();
+            String idInTree = node.getId();
+            treeNodeRepository.deleteByParent(idInTree);
             treeNodeRepository.deleteById(id);
         } else {
             throw new NotFoundException("NODE.NOT.FOUND", "Node not found");
@@ -78,10 +82,12 @@ public class TreeNodeService implements ITreeNodeService {
     public List<TreeNode> getUserTree() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return this.treeNodeRepository.findByUsername(username);
-//        result.stream().forEach(node -> {
-//            if (node.getTestCase() != null)
-//                node.setText(node.getTestCase().getTitle() + " " + node.getTestCase().getId());
-//        });
-//        return result;
+    }
+
+    @Override
+    public TreeNode updateNode(TreeNode node) {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        node.setUsername(username);
+        return treeNodeRepository.save(node);
     }
 }

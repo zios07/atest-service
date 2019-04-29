@@ -52,4 +52,9 @@ public class TestCaseController {
         treeNodeService.deleteTreeNode(id);
     }
 
+    @PutMapping(value = "tree/node")
+    public TreeNode deleteTreeNode(@RequestBody TreeNode node) {
+        return treeNodeService.updateNode(node);
+    }
+
 }
